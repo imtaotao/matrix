@@ -1,0 +1,24 @@
+{
+  "name": "@rustle/matrix",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/matrix.common.js",
+  "module": "dist/matrix.esm.js",
+  "scripts": {
+    "demo": "http-server ./ -o",
+    "build": "node ./build.js -w",
+    "publish": "node ./build.js && npm version major"
+  },
+  "author": "imtaotao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imtaotao/matrix/issues",
+    "email": "dwchentao@163.com"
+  },
+  "keywords": [
+    "matrix",
+    "element"
+  ],
+  "homepage": "https://github.com/imtaotao/matrix",
+  "repository": "git@github.com:imtaotao/matrix.git"
+}
