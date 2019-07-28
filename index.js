@@ -1,4 +1,10 @@
 var Matrix = (function () {
+  function assert (val) {
+    if (typeof val !== 'number' || Number.isNaN(val)) {
+      throw TypeError('The parameter must be of type number.')
+    }
+  }
+
   // get element matrix value
   function getElementMatrix (element) {
     var defaultValue = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
@@ -22,11 +28,11 @@ var Matrix = (function () {
 
   // set style
   function setMatrixToElement (element, matrix) {
-
+    element.style.transform = 'matrix3d('+ matrix.join(',') +')'
   }
 
   // matrix class
-  function matrixClass (element) {
+  function MatrixClass (element) {
     if (!element) {
       throw Error('You must pass in one element.')
     }
@@ -35,7 +41,12 @@ var Matrix = (function () {
   }
 
   // rotate
-  matrixClass.prototype.rotate3d = function (x, y, z, deg) {
+  MatrixClass.prototype.rotate3d = function (x, y, z, deg) {
+    assert(x)
+    assert(y)
+    assert(z)
+    assert(deg)
+
     var matrix = this.storageValue
     var agl = Math.PI * deg / 180
     var numSqrt = Math.sqrt(x * x + y * y + z * z)
@@ -74,24 +85,28 @@ var Matrix = (function () {
     return this
   }
 
-  matrixClass.prototype.rotateX = function (deg) {
+  MatrixClass.prototype.rotateX = function (deg) {
     return this.rotate3d(1, 0, 0, deg)
   }
 
-  matrixClass.prototype.rotateY = function (deg) {
+  MatrixClass.prototype.rotateY = function (deg) {
     return this.rotate3d(0, 1, 0, deg)
   }
 
-  matrixClass.prototype.rotateZ = function (deg) {
+  MatrixClass.prototype.rotateZ = function (deg) {
     return this.rotate3d(0, 0, 1, deg)
   }
 
-  matrixClass.prototype.rotate = function (deg) {
+  MatrixClass.prototype.rotate = function (deg) {
     return this.rotate3d(0, 0, 1, deg)
   }
 
   // translate
-  matrixClass.prototype.translate3d = function (x, y, z) {
+  MatrixClass.prototype.translate3d = function (x, y, z) {
+    assert(x)
+    assert(y)
+    assert(z)
+
     var matrix = this.storageValue
     var c12 = x * matrix[0] + y * matrix[4] + z * matrix[8] + matrix[12],
         c13 = x * matrix[1] + y * matrix[5] + z * matrix[9] + matrix[13],
@@ -103,24 +118,28 @@ var Matrix = (function () {
     return this
   }
 
-  matrixClass.prototype.translateX = function (x) {
-    return translate3d(x, 0, 0)
+  MatrixClass.prototype.translateX = function (x) {
+    return this.translate3d(x, 0, 0)
   }
 
-  matrixClass.prototype.translateY = function (y) {
-    return translate3d(0, y, 0)
+  MatrixClass.prototype.translateY = function (y) {
+    return this.translate3d(0, y, 0)
   }
 
-  matrixClass.prototype.translateZ = function (z) {
-    return translate3d(0, 0, z)
+  MatrixClass.prototype.translateZ = function (z) {
+    return this.translate3d(0, 0, z)
   }
 
-  matrixClass.prototype.translate = function (x, y) {
-    return translate3d(x, y, 0)
+  MatrixClass.prototype.translate = function (x, y) {
+    return this.translate3d(x, y, 0)
   }
 
   // scale
-  matrixClass.prototype.scale3d = function (x, y, z) {
+  MatrixClass.prototype.scale3d = function (x, y, z) {
+    assert(x)
+    assert(y)
+    assert(z)
+
     var matrix = this.storageValue
     var s0 = matrix[0] * x, s4 = matrix[4] * y, s8 = matrix[8] * z,
         s1 = matrix[1] * x, s5 = matrix[5] * y, s9 = matrix[9] * z,
@@ -132,24 +151,27 @@ var Matrix = (function () {
     return this
   }
 
-  matrixClass.prototype.scaleX = function (x) {
-    return scale3d(x, 1, 1)
+  MatrixClass.prototype.scaleX = function (x) {
+    return this.scale3d(x, 1, 1)
   }
 
-  matrixClass.prototype.scaleY = function(y) {
-    return scale3d(1, y, 1)
+  MatrixClass.prototype.scaleY = function(y) {
+    return this.scale3d(1, y, 1)
   }
 
-  matrixClass.prototype.scaleZ = function (z) {
-    return scale3d(1, 1, z)
+  MatrixClass.prototype.scaleZ = function (z) {
+    return this.scale3d(1, 1, z)
   }
 
   // skew
-  matrixClass.prototype.scale = function (x, y) {
-    return scale3d(x, y, 1)
+  MatrixClass.prototype.scale = function (x, y) {
+    return this.scale3d(x, y, 1)
   }
 
-  matrixClass.prototype.skew = function (x, y) {
+  MatrixClass.prototype.skew = function (x, y) {
+    assert(x)
+    assert(y)
+    
     var matrix = this.storageValue
     var	xtan = Math.tan(Math.PI * x / 180)
     var	ytan = Math.tan(Math.PI * y / 180)
@@ -168,13 +190,13 @@ var Matrix = (function () {
     return this
   }
 
-  matrixClass.prototype.skewX = function (x) {
+  MatrixClass.prototype.skewX = function (x) {
     return skew(x, 0)
   }
 
-  matrixClass.prototype.skewY = function (y) {
+  MatrixClass.prototype.skewY = function (y) {
     return skew(0, y)
   }
 
-  return matrixClass
+  return element => new MatrixClass(element)
 })()
