@@ -1,6 +1,6 @@
 {
   "name": "@rustle/matrix",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A html element matrix transform library.",
   "main": "dist/matrix.common.js",
   "module": "dist/matrix.esm.js",

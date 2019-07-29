@@ -7,14 +7,11 @@ var Matrix = (function () {
 
   // get element matrix value
   function getElementMatrix (element) {
-    var defaultValue = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-    if (!element) {
-      return defaultValue
-    }
-
     var matrix = getComputedStyle(element).transform
+
     if (!matrix || matrix === 'none') {
-      return defaultValue
+      // default value
+      return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
     }
 
     matrix = (/(\w+\()([^\)]+)/g.exec(matrix))[2].split(',').map(function (v) {
@@ -138,7 +135,7 @@ var Matrix = (function () {
     var matrix = this.value
     var s0 = matrix[0] * x, s4 = matrix[4] * y, s8 = matrix[8] * z,
         s1 = matrix[1] * x, s5 = matrix[5] * y, s9 = matrix[9] * z,
-        s2 = matrix[2] * x,	s6 = matrix[6] * y, s10 = matrix[10] * z,
+        s2 = matrix[2] * x, s6 = matrix[6] * y, s10 = matrix[10] * z,
         s3 = matrix[3] * x, s7 = matrix[7] * y, s11 = matrix[11] * z
 
     this.value = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, matrix[12], matrix[13], matrix[14], matrix[15]]
