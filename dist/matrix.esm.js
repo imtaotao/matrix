@@ -26,18 +26,13 @@ var Matrix = (function () {
     return matrix
   }
 
-  // set style
-  function setMatrixToElement (element, matrix) {
-    element.style.transform = 'matrix3d('+ matrix.join(',') +')'
-  }
-
   // matrix class
   function MatrixClass (element) {
     if (!element) {
       throw Error('You must pass in one element.')
     }
     this.element = element
-    this.storageValue = getElementMatrix(element)
+    this.value = getElementMatrix(element)
   }
 
   // rotate
@@ -47,7 +42,7 @@ var Matrix = (function () {
     assert(z)
     assert(deg)
 
-    var matrix = this.storageValue
+    var matrix = this.value
     var agl = Math.PI * deg / 180
     var numSqrt = Math.sqrt(x * x + y * y + z * z)
     var cos = Math.cos(agl)
@@ -80,8 +75,7 @@ var Matrix = (function () {
         d10 = matrix[2] * r8 + matrix[6] * r9 + matrix[10] * r10,
         d11 = matrix[3] * r8 + matrix[7] * r9 + matrix[11] * r10
 
-    this.storageValue = [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, matrix[12], matrix[13], matrix[14], matrix[15]]
-    setMatrixToElement(this.element, this.storageValue)
+    this.value = [d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, matrix[12], matrix[13], matrix[14], matrix[15]]
     return this
   }
 
@@ -107,14 +101,13 @@ var Matrix = (function () {
     assert(y)
     assert(z)
 
-    var matrix = this.storageValue
+    var matrix = this.value
     var c12 = x * matrix[0] + y * matrix[4] + z * matrix[8] + matrix[12],
         c13 = x * matrix[1] + y * matrix[5] + z * matrix[9] + matrix[13],
         c14 = x * matrix[2] + y * matrix[6] + z * matrix[10] + matrix[14],
         c15 = x * matrix[3] + y * matrix[7] + z * matrix[11] + matrix[15]
   
-    this.storageValue = [matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5], matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11], c12, c13, c14, c15]
-    setMatrixToElement(this.element, this.storageValue)
+    this.value = [matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5], matrix[6], matrix[7], matrix[8], matrix[9], matrix[10], matrix[11], c12, c13, c14, c15]
     return this
   }
 
@@ -140,14 +133,13 @@ var Matrix = (function () {
     assert(y)
     assert(z)
 
-    var matrix = this.storageValue
+    var matrix = this.value
     var s0 = matrix[0] * x, s4 = matrix[4] * y, s8 = matrix[8] * z,
         s1 = matrix[1] * x, s5 = matrix[5] * y, s9 = matrix[9] * z,
         s2 = matrix[2] * x,	s6 = matrix[6] * y, s10 = matrix[10] * z,
         s3 = matrix[3] * x, s7 = matrix[7] * y, s11 = matrix[11] * z
 
-    this.storageValue = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, matrix[12], matrix[13], matrix[14], matrix[15]]
-    setMatrixToElement(this.element, this.storageValue)
+    this.value = [s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, matrix[12], matrix[13], matrix[14], matrix[15]]
     return this
   }
 
@@ -172,7 +164,7 @@ var Matrix = (function () {
     assert(x)
     assert(y)
     
-    var matrix = this.storageValue
+    var matrix = this.value
     var	xtan = Math.tan(Math.PI * x / 180)
     var	ytan = Math.tan(Math.PI * y / 180)
 
@@ -185,17 +177,22 @@ var Matrix = (function () {
         f6 = matrix[2] * xtan + matrix[6],
         f7 = matrix[3] * xtan + matrix[7]
 
-    this.storageValue = [f0, f1, f2, f3, f4, f5, f6, f7, matrix[8], matrix[9], matrix[10], matrix[11], matrix[12], matrix[13], matrix[14], matrix[15]]
-    setMatrixToElement(this.element, this.storageValue)
+    this.value = [f0, f1, f2, f3, f4, f5, f6, f7, matrix[8], matrix[9], matrix[10], matrix[11], matrix[12], matrix[13], matrix[14], matrix[15]]
     return this
   }
 
   MatrixClass.prototype.skewX = function (x) {
-    return skew(x, 0)
+    return this.skew(x, 0)
   }
 
   MatrixClass.prototype.skewY = function (y) {
-    return skew(0, y)
+    return this.skew(0, y)
+  }
+
+  // set style
+  MatrixClass.prototype.to = function () {
+    this.element.style.transform = 'matrix3d('+ this.value.join(',') +')'
+    return this
   }
 
   return element => new MatrixClass(element)
