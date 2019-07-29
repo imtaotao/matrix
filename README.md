@@ -52,6 +52,9 @@ The `Matrix` is a function, call this function will return a `Matrix object`. Th
 #### set style to element
   + `to() : matrix`
 
+#### update the value of the staging
+  + `update() : matrix`
+
 View all methods
 ```js
   import Matrix from '@rustle/matrix'
@@ -59,7 +62,9 @@ View all methods
 ```
 
 ### Notes
-  Since each matrix transformation is performed on the previous basis, So you need to call the `to` method to render the data to the view. But it's best to render after the final calculation of the data is complete, which can reduce the operation on dom.
+  1. Since each matrix transformation is performed on the previous basis, So you need to call the `to` method to render the data to the view. But it's best to render after the final calculation of the data is complete, which can reduce the operation on dom.
+
+  2. `Matrix` will cache the value of each conversion, which will reduce the value of the matrix in the dom, but sometimes the matrix of dom will change for other reasons. At this point, we can call the `updat`e method to update the cache value in `Matrix`.
 
 [npm-url]: https://www.npmjs.com/package/@rustle/matrix
 [npm-image]: https://img.shields.io/npm/v/@rustle/matrix.svg?style=flat-square

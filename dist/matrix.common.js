@@ -17,7 +17,9 @@ var Matrix = (function () {
       return defaultValue
     }
 
-    matrix = (/(\w+\()([^\)]+)/g.exec(matrix))[2].split(',').map(v => Number(v))
+    matrix = (/(\w+\()([^\)]+)/g.exec(matrix))[2].split(',').map(function (v) {
+      return Number(v)
+    })
 
     // 2d and 3d compatible processing
     if(matrix.length < 7) {
@@ -192,6 +194,12 @@ var Matrix = (function () {
   // set style
   MatrixClass.prototype.to = function () {
     this.element.style.transform = 'matrix3d('+ this.value.join(',') +')'
+    return this
+  }
+
+  // update matrix value
+  MatrixClass.prototype.update = function () {
+    this.value = getElementMatrix(this.element)
     return this
   }
 
