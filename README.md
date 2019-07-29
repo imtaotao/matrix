@@ -7,9 +7,9 @@ A html element matrix transform library.
 `<script src="https://cdn.jsdelivr.net/gh/imtaotao/matrix/dist/matrix.min.js"></script>`
 
 ### API
-The Matrix is a function, call this function will return a Matrix object. The Matrix object has the following API.
+The `Matrix` is a function, call this function will return a `Matrix object`. The `Matrix object` has the following API.
 
-  + `Matrix: HTMLElemtn => matrix`
+  + `Matrix: HTMLElement => matrix`
 ```js
   import Matrix from '@rustle/matrix'
 
