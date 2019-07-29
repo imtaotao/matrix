@@ -1,6 +1,6 @@
 {
   "name": "@rustle/matrix",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A html element matrix transform library.",
   "main": "dist/matrix.common.js",
   "module": "dist/matrix.esm.js",
@@ -20,8 +20,5 @@
     "element"
   ],
   "homepage": "https://github.com/imtaotao/matrix",
-  "repository": "git@github.com:imtaotao/matrix.git",
-  "dependencies": {
-    "@rustle/matrix": "^0.0.3"
-  }
+  "repository": "git@github.com:imtaotao/matrix.git"
 }
