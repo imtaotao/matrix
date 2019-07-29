@@ -1,6 +1,6 @@
 var Matrix = (function () {
   function assert (val) {
-    if (typeof val !== 'number' || Number.isNaN(val)) {
+    if (typeof val !== 'number' || isNaN(val)) {
       throw TypeError('The parameter must be of type number.')
     }
   }
