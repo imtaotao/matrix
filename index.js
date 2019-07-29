@@ -203,5 +203,7 @@ var Matrix = (function () {
     return this
   }
 
-  return element => new MatrixClass(element)
+  return function (element) {
+    return new MatrixClass(element)
+  } 
 })()
